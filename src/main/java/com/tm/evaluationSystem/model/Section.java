@@ -1,6 +1,5 @@
 package com.tm.evaluationSystem.model;
 
-import jakarta.annotation.Nonnull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,16 +9,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
-
+@Document("section")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Question {
+public class Section {
     @Id
     private String id;
-    @Nonnull
-    private String question;
-    @Nonnull
-    private List<Answer> answerOptions;
+
+    private String name;
+    private List<Question> questions;
 }
