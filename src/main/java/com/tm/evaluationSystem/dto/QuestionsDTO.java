@@ -15,8 +15,6 @@ import java.util.List;
 @NoArgsConstructor
 public class QuestionsDTO {
     private String id;
-    @Nonnull
     private String question;
-    @Nonnull
     private List<AnswerOptionsDTO> answerOptions;
 }

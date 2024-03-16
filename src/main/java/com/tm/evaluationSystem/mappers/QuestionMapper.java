@@ -29,6 +29,7 @@ public class QuestionMapper {
                 .map( answer -> Answer.builder()
                         .answer(answer.getAnswer())
                         .id(answer.getId())
+                        .isRight(answer.getIsRight())
                         .build()
                 ).toList();
         return Question.builder()

@@ -50,6 +50,7 @@ public class QuestionsService {
         Section section = mongoTemplate.findById(sectionId, Section.class);
         if(section!=null){
             Question question = mapQuestionsDTOToQuestions(questionsDTO);
+            if(section.getQuestions()==null) section.setQuestions(new ArrayList<>());
             section.getQuestions().add(question);
             mongoTemplate.save(section);
         }else {

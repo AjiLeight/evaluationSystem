@@ -8,14 +8,12 @@ public class SectionMapper {
         return Section.builder()
                 .name(source.getName())
                 .id(source.getId())
-                .questions(source.getQuestions())
                 .build();
     }
 
     public static SectionDTO mapSectionToSectionDTO(Section source){
         return SectionDTO.builder()
                 .name(source.getName())
-                .questions(source.getQuestions())
                 .id(source.getId())
                 .build();
     }
