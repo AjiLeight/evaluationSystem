@@ -16,7 +16,6 @@ import java.util.List;
 @Builder
 public class Question {
     @Id
-
     private int id;
     private String question;
     private List<Answer> answerOptions;
