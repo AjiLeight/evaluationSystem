@@ -79,8 +79,8 @@ public class AnswerService {
         return false;
     }
 
-    private int calculateNewResultPercentage(int rightAnswers) {
-        return (rightAnswers/TOTAL_MARKS_COMMON)*100;
+    private float calculateNewResultPercentage(int rightAnswers) {
+        return ((float)rightAnswers/TOTAL_MARKS_COMMON)*100;
     }
 
     private Result findResultByUserId(String userId) {

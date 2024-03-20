@@ -1,7 +1,8 @@
 package com.tm.evaluationsystem.service;
 
 import com.tm.evaluationsystem.dao.QuestionsDao;
-import com.tm.evaluationsystem.dto.QuestionsDTO;
+import com.tm.evaluationsystem.dto.QuestionsRequestDTO;
+import com.tm.evaluationsystem.dto.QuestionsResponseDTO;
 import com.tm.evaluationsystem.exception.SectionNotFoundException;
 import com.tm.evaluationsystem.mappers.QuestionMapper;
 import com.tm.evaluationsystem.model.Question;
@@ -25,7 +26,7 @@ public class QuestionsService {
     private final QuestionsDao questionsDao;
     private final MongoTemplate mongoTemplate;
 
-    public List<QuestionsDTO> findAllQuestions(){
+    public List<QuestionsResponseDTO> findAllQuestions(){
         List<Question> questionsDBInfo = questionsRepository.findAll();
         return questionsDBInfo.stream()
                 .map(QuestionMapper::mapQuestionsToQuestionsDTO)
@@ -33,7 +34,7 @@ public class QuestionsService {
     }
 
 
-    public List<QuestionsDTO> findAllQuestionsBySectionId(String sectionId) {
+    public List<QuestionsResponseDTO> findAllQuestionsBySectionId(String sectionId) {
     List<Question> allQuestions = questionsDao.getAllQuestionsBySectionId(sectionId);
         if(allQuestions==null || allQuestions.isEmpty())
         {
@@ -44,11 +45,11 @@ public class QuestionsService {
                 .toList();
     }
 
-    public void createQuestionBySectionId(QuestionsDTO questionsDTO, String sectionId) throws SectionNotFoundException {
+    public void createQuestionBySectionId(QuestionsRequestDTO requestDTO, String sectionId) throws SectionNotFoundException {
         Section section = mongoTemplate.findById(sectionId, Section.class);
         if(section!=null){
-            Question question = mapQuestionsDTOToQuestions(questionsDTO, sectionId);
-            question.setId(generateQuestionId(sectionId));
+            Question question = mapQuestionsDTOToQuestions(requestDTO, sectionId);
+            question.setId(generateQuestionId(section));
             if(section.getQuestions()==null) section.setQuestions(new ArrayList<>());
             section.getQuestions().add(question);
             mongoTemplate.save(section);
@@ -58,17 +59,17 @@ public class QuestionsService {
 
     }
 
-    private int generateQuestionId(String sectionId) {
-        Section section = mongoTemplate.findById(sectionId, Section.class);
-        return section.getQuestions().size();
+    private int generateQuestionId(Section section) {
+        if(section.getQuestions()!=null)return section.getQuestions().size();
+        return 0;
     }
 
-    public QuestionsDTO updateQuestionBySectionid(QuestionsDTO questionsDTO, String sectionId) {
+    public QuestionsResponseDTO updateQuestionBySectionid(QuestionsRequestDTO requestDTO, String sectionId) {
         //TODO: logic
         return null;
     }
 
-    public QuestionsDTO deleteQuestionBySectionid(String sectionId, String questionId) {
+    public QuestionsResponseDTO deleteQuestionBySectionid(String sectionId, String questionId) {
         //TODO: logic
         return null;
     }

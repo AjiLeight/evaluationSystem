@@ -22,6 +22,6 @@ public class Result {
     private List<QuestionAnswerMap> questionAnswerMaps;
     private int attemptedQuestions;
     private int rightAnswers;
-    private int percentage;
+    private float percentage;
     private boolean isPassed;
 }
